@@ -92,7 +92,7 @@ development use:
 
 To set the url of the [content server](https://github.com/mozilla/fxa-content-server), edit `config.json` on your deployed instance and add:
 
-    "contentServer": {
+    "content_server": {
       "url": "http://your.content.server.org"
     }
 

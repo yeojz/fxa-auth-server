@@ -95,9 +95,9 @@ module.exports = function (fs, path, url, convict) {
         env: 'PORT'
       }
     },
-    contentServer: {
+    content_server: {
       url: {
-        doc: "Thes url of the correspoding fxa-content-server instance",
+        doc: "Thes url of the corresponding fxa-content-server instance",
         default: 'http://127.0.0.1:3030',
         env: 'CONTENT_SERVER_URL'
       }

@@ -13,7 +13,7 @@
   },
   "secretKeyFile": "/home/app/var/secret-key.json",
   "publicKeyFile": "/home/app/var/public-key.json",
-  "contentServer": {
+  "content_server": {
     "url": "https://accounts.dev.lcip.org"
   },
   "dev": {
