@@ -21,7 +21,7 @@ module.exports = function (log, crypto, isA, config) {
       path: '/verify_email',
       config: {
         handler: function (request) {
-          return request.reply.redirect(config.contentServer.url + request.raw.req.url)
+          return request.reply.redirect(config.content_server.url + request.raw.req.url)
         },
         validate: {
           query: {
