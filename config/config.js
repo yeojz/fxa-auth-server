@@ -230,7 +230,8 @@ module.exports = function (fs, path, url, convict) {
   conf.set('domain', url.parse(conf.get('public_url')).host)
 
   if (! conf.has('smtp.verification_url')) {
-    conf.set('smtp.verification_url', conf.get('public_url') + '/v1/verify_email')
+    conf.set('smtp.verification_url',
+             url.resolve(conf.get('content_server.url'), '/v1/verify_email'))
   }
 
   conf.validate()
