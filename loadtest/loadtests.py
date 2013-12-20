@@ -199,7 +199,8 @@ class HawkAuth(AuthBase):
 
 class LoadTest(TestCase):
 
-    server_url = 'http://api-accounts.loadtest.lcip.org'
+    server_url = 'https://api-accounts.stage.mozaws.net/'
+    #server_url = 'http://api-accounts.loadtest.lcip.org'
     #server_url = 'http://127.0.0.1:9000/'
 
     def makeurl(self, path):
@@ -311,7 +312,7 @@ class LoadTest(TestCase):
           'email': self.credentials['email'],
           'srp': self.credentials['srp'],
           'passwordStretching': self.credentials['passwordStretching'],
-          'preVerified': True,
+          #'preVerified': True,
         })
         return res
 
@@ -319,7 +320,7 @@ class LoadTest(TestCase):
         res = self._req_POST('/v1/raw_password/account/create', {
           'email': self.credentials['email'],
           'password': 'password',
-          'preVerified': True,
+          #'preVerified': True,
         })
         return res
 
