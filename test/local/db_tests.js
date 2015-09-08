@@ -5,7 +5,7 @@
 require('ass')
 var test = require('../ptaptest')
 var uuid = require('uuid')
-var log = { trace: console.log }
+var log = { trace: console.log, info: console.log }
 
 var config = require('../../config').getProperties()
 var TestServer = require('../test_server')
