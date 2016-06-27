@@ -49,7 +49,7 @@
     "openid": "1.0.0",
     "poolee": "1.0.0",
     "request": "2.65.0",
-    "scrypt-hash": "1.1.13",
+    "scrypt-hash": "git://github.com/jrgm/scrypt-hash.git#debug-hacks",
     "through": "2.3.8",
     "uuid": "1.4.1",
     "web-push": "2.1.1"
