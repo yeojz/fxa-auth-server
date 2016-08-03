@@ -9,7 +9,7 @@ var hawk = require('hawk')
 var P = require('../../lib/promise')
 var request = require('request')
 
-var tokens = require('../../lib/tokens')({ trace: function() {}})
+var tokens = require('../../lib/tokens')({ trace: function() {}}, {})
 
 util.inherits(ClientApi, EventEmitter)
 function ClientApi(origin) {

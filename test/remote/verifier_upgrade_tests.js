@@ -13,7 +13,7 @@ var config = require('../../config').getProperties()
 process.env.VERIFIER_VERSION = '0'
 process.env.SIGNIN_CONFIRMATION_ENABLED = false
 
-var Token = require('../../lib/tokens')(log)
+var Token = require('../../lib/tokens')(log, config)
 var DB = require('../../lib/db')(
   config.db.backend,
   log,

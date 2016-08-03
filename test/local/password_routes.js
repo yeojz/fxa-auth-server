@@ -37,7 +37,8 @@ var makeRoutes = function (options) {
     config.verifierVersion,
     options.customs || {},
     checkPassword,
-    options.push || {}
+    options.push || {},
+    config
   )
 }
 

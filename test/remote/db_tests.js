@@ -10,7 +10,7 @@ var log = { trace: console.log, info: console.log }
 
 var config = require('../../config').getProperties()
 var TestServer = require('../test_server')
-var Token = require('../../lib/tokens')(log)
+var Token = require('../../lib/tokens')(log, config)
 var DB = require('../../lib/db')(
   config.db.backend,
   log,

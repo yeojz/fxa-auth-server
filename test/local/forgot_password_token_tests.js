@@ -10,7 +10,7 @@ var timestamp = Date.now()
 var PasswordForgotToken = require('../../lib/tokens/password_forgot_token')(
   log,
   require('util').inherits,
-  require('../../lib/tokens')(log),
+  require('../../lib/tokens')(log, {}),
   require('crypto'),
   1000 * 60 * 15 // 15 minutes
 )

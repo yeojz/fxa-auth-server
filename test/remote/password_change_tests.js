@@ -8,7 +8,7 @@ var test = require('../ptaptest')
 var TestServer = require('../test_server')
 var url = require('url')
 
-var tokens = require('../../lib/tokens')({ trace: function() {}})
+var tokens = require('../../lib/tokens')({ trace: function() {}}, config)
 function getSessionTokenId(sessionTokenHex) {
   return tokens.SessionToken.fromHex(sessionTokenHex)
     .then(

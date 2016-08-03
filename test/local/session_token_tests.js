@@ -7,7 +7,7 @@ var test = require('../ptaptest')
 var log = { trace: function() {}, info: function () {} }
 var crypto = require('crypto')
 
-var tokens = require('../../lib/tokens')(log)
+var tokens = require('../../lib/tokens')(log, {})
 var SessionToken = tokens.SessionToken
 
 var TOKEN_FRESHNESS_THRESHOLD = require('../../lib/tokens/session_token').TOKEN_FRESHNESS_THREADHOLD

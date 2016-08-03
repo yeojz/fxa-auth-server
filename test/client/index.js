@@ -7,7 +7,7 @@ var ClientApi = require('./api')
 var butil = require('../../lib/crypto/butil')
 var pbkdf2 = require('../../lib/crypto/pbkdf2')
 var hkdf = require('../../lib/crypto/hkdf')
-var tokens = require('../../lib/tokens')({ trace: function () {}})
+var tokens = require('../../lib/tokens')({ trace: function () {}}, { isProduction: true })
 
 function Client(origin) {
   this.uid = null
