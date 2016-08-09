@@ -20,8 +20,6 @@ var pushManager = new PushManager({
 test(
   'pushToAllDevices sends notifications using a real push server',
   function (t) {
-    t.assert(true, 'Test Skipped. See issue #1368.')
-    return t.end()
 
     pushManager.getSubscription().then(function (subscription) { // eslint-disable-line no-unreachable
       var mockDbResult = {
