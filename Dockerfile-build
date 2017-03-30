@@ -1,6 +1,6 @@
 FROM mhart/alpine-node:4.8.0
 
-RUN apk add --no-cache git make gcc g++ linux-headers openssl python
+RUN apk add --no-cache git make gcc g++ linux-headers openssl python yarn
 
 RUN addgroup -g 10001 app && \
     adduser -D -G app -h /app -u 10001 app
@@ -8,13 +8,13 @@ WORKDIR /app
 
 USER app
 
-COPY npm-shrinkwrap.json npm-shrinkwrap.json
+COPY yarn.lock yarn.lock
 COPY package.json package.json
 COPY scripts/download_l10n.sh scripts/download_l10n.sh
 COPY scripts/gen_keys.js scripts/gen_keys.js
 COPY scripts/gen_vapid_keys.js scripts/gen_vapid_keys.js
 
-RUN npm install --production && rm -rf ~app/.npm /tmp/*
+RUN yarn install --production --pure-lockfile && rm -rf ~app/.npm /tmp/*
 
 COPY . /app
 USER root
