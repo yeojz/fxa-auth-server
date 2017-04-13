@@ -1,3 +1,14 @@
+<a name="1.84.3"></a>
+## [1.84.3](https://github.com/mozilla/fxa-auth-server/compare/v1.84.2...v1.84.3) (2017-04-13)
+
+
+### Bug Fixes
+
+* **promise:** log unhandled rejections instead of throwing ([ce002e5](https://github.com/mozilla/fxa-auth-server/commit/ce002e5))
+* **server:** set useDomains to true ([301b671](https://github.com/mozilla/fxa-auth-server/commit/301b671))
+
+
+
 <a name="1.84.2"></a>
 ## [1.84.2](https://github.com/mozilla/fxa-auth-server/compare/v1.84.0...v1.84.2) (2017-04-11)
 
