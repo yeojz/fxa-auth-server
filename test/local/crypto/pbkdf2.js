@@ -17,10 +17,10 @@ describe('pbkdf2', () => {
       var password = Buffer('pässwörd')
       return pbkdf2.derive(password, salt, ITERATIONS, LENGTH)
         .then(
-        function (K1) {
-          assert.equal(K1.toString('hex'), 'f84913e3d8e6d624689d0a3e9678ac8dcc79d2c2f3d9641488cd9d6ef6cd83dd')
-        }
-      )
+          function (K1) {
+            assert.equal(K1.toString('hex'), 'f84913e3d8e6d624689d0a3e9678ac8dcc79d2c2f3d9641488cd9d6ef6cd83dd')
+          }
+        )
     }
   )
 
@@ -32,10 +32,10 @@ describe('pbkdf2', () => {
       var salt = Buffer('identity.mozilla.com/picl/v1/first-PBKDF:' + email)
       return pbkdf2.derive(password, salt, ITERATIONS, LENGTH)
         .then(
-        function (K1) {
-          assert.equal(K1.toString('hex'), '5f99c22dfac713b6d73094604a05082e6d345f8a00d4947e57105733f51216eb')
-        }
-      )
+          function (K1) {
+            assert.equal(K1.toString('hex'), '5f99c22dfac713b6d73094604a05082e6d345f8a00d4947e57105733f51216eb')
+          }
+        )
     }
   )
 
@@ -52,10 +52,10 @@ describe('pbkdf2', () => {
 
       return pbkdf2.derive(password, salt, ITERATIONS, LENGTH)
         .then(
-        function (K1) {
-          assert.equal(K1.toString('hex'), 'c16d46c31bee242cb31f916e9e38d60b76431d3f5304549cc75ae4bc20c7108c')
-        }
-      )
+          function (K1) {
+            assert.equal(K1.toString('hex'), 'c16d46c31bee242cb31f916e9e38d60b76431d3f5304549cc75ae4bc20c7108c')
+          }
+        )
     }
   )
 

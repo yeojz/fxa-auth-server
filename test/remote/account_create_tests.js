@@ -337,23 +337,23 @@ describe('remote account create', function() {
         redirectTo: 'http://accounts.firefox.com.evil.us'
       }
       return api.accountCreate(email, authPW, options)
-      .then(
-        assert.fail,
-        function (err) {
-          assert.equal(err.errno, 107, 'bad redirectTo rejected')
-        }
-      )
-      .then(
-        function () {
-          return api.passwordForgotSendCode(email, options)
-        }
-      )
-      .then(
-        assert.fail,
-        function (err) {
-          assert.equal(err.errno, 107, 'bad redirectTo rejected')
-        }
-      )
+        .then(
+          assert.fail,
+          function (err) {
+            assert.equal(err.errno, 107, 'bad redirectTo rejected')
+          }
+        )
+        .then(
+          function () {
+            return api.passwordForgotSendCode(email, options)
+          }
+        )
+        .then(
+          assert.fail,
+          function (err) {
+            assert.equal(err.errno, 107, 'bad redirectTo rejected')
+          }
+        )
     }
   )
 
@@ -368,25 +368,25 @@ describe('remote account create', function() {
       }
 
       return api.accountCreate(email, authPW, options)
-      .then(
-        assert.fail,
-        function (err) {
-          assert.equal(err.errno, 107, 'bad redirectTo rejected')
-        }
-      )
-      .then(
-        function () {
-          return api.passwordForgotSendCode(email, {
-            redirectTo: 'https://fakefirefox.com'
-          })
-        }
-      )
-      .then(
-        assert.fail,
-        function (err) {
-          assert.equal(err.errno, 107, 'bad redirectTo rejected')
-        }
-      )
+        .then(
+          assert.fail,
+          function (err) {
+            assert.equal(err.errno, 107, 'bad redirectTo rejected')
+          }
+        )
+        .then(
+          function () {
+            return api.passwordForgotSendCode(email, {
+              redirectTo: 'https://fakefirefox.com'
+            })
+          }
+        )
+        .then(
+          assert.fail,
+          function (err) {
+            assert.equal(err.errno, 107, 'bad redirectTo rejected')
+          }
+        )
     }
   )
 
@@ -464,10 +464,10 @@ describe('remote account create', function() {
         assert.ok(client, 'created account')
         return server.mailbox.waitForEmail(email)
       })
-      .then(function (emailData) {
-        assert.equal(emailData.headers['x-flow-begin-time'], opts.metricsContext.flowBeginTime, 'flow begin time set')
-        assert.equal(emailData.headers['x-flow-id'], opts.metricsContext.flowId, 'flow id set')
-      })
+        .then(function (emailData) {
+          assert.equal(emailData.headers['x-flow-begin-time'], opts.metricsContext.flowBeginTime, 'flow begin time set')
+          assert.equal(emailData.headers['x-flow-id'], opts.metricsContext.flowId, 'flow id set')
+        })
     }
   )
 

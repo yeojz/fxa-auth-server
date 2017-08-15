@@ -62,28 +62,28 @@ function doc(args) {
     parseDocs(args.path),
     parseErrors()
   ])
-  .spread((docs, errors) => P.all([
-    parseRoutes().then(routes => marshallRouteData(docs, errors.definitionsMap, routes)),
-    parseValidators(),
-    parseMetricsContext(),
-    parseFeatures(),
-    docs,
-    errors
-  ]))
-  .spread((modules, validators, metricsContext, features, docs, errors) => writeOutput(Object.assign({
-    modules,
-    validators,
-    metricsContext,
-    features,
-    errors: errors.definitions,
-    additionalErrorParams: errors.additionalErrorParams
-  }, docs), args.path))
-  .then(() => {
-    console.log(`API docs updated at ${args.path}`)
-  })
-  .catch(error => {
-    console.error(error.stack)
-  })
+    .spread((docs, errors) => P.all([
+      parseRoutes().then(routes => marshallRouteData(docs, errors.definitionsMap, routes)),
+      parseValidators(),
+      parseMetricsContext(),
+      parseFeatures(),
+      docs,
+      errors
+    ]))
+    .spread((modules, validators, metricsContext, features, docs, errors) => writeOutput(Object.assign({
+      modules,
+      validators,
+      metricsContext,
+      features,
+      errors: errors.definitions,
+      additionalErrorParams: errors.additionalErrorParams
+    }, docs), args.path))
+    .then(() => {
+      console.log(`API docs updated at ${args.path}`)
+    })
+    .catch(error => {
+      console.error(error.stack)
+    })
 
 }
 
@@ -91,7 +91,7 @@ function parseArgs () {
   let outputPath
 
   switch (process.argv.length) {
-    /* eslint-disable indent, no-fallthrough */
+  /* eslint-disable indent, no-fallthrough */
     case 3:
       outputPath = path.resolve(process.argv[2])
     case 2:
@@ -300,7 +300,7 @@ function isObject (node) {
 
 function marshallValue (node, variables) {
   switch (node.type) {
-    /* eslint-disable indent */
+  /* eslint-disable indent */
     case 'Literal':
       return node.raw
 
@@ -370,13 +370,13 @@ function findModuleExports (node) {
       }
     }
   })
-  .concat(findAssignmentsTo(node, {
-    type: 'MemberExpression',
-    object: {
-      type: 'Identifier',
-      name: 'exports'
-    }
-  }))
+    .concat(findAssignmentsTo(node, {
+      type: 'MemberExpression',
+      object: {
+        type: 'Identifier',
+        name: 'exports'
+      }
+    }))
 }
 
 function findAssignmentsTo (node, lhs) {
@@ -572,7 +572,7 @@ function marshallParameterArguments (docs, paramTag, routeSlug, parameters, vari
 
   return parameters.arguments.reduce((result, arg) => {
     switch (arg.type) {
-      /* eslint-disable indent */
+    /* eslint-disable indent */
       case 'ObjectExpression':
         merge(result, marshallParameterProperties(docs, paramTag, routeSlug, parameters, variables))
         break
@@ -664,15 +664,15 @@ function marshallErrorResponses (errors, handler, filePath) {
       }
     }
   }, { recursive: true })
-  .filter(errorCall => {
-    const errorName = errorCall.callee.property.name
-    if (dupes.has(errorName)) {
-      return false
-    }
-    dupes.add(errorName)
-    return !! errors[errorName]
-  })
-  .map(errorCall => errors[errorCall.callee.property.name])
+    .filter(errorCall => {
+      const errorName = errorCall.callee.property.name
+      if (dupes.has(errorName)) {
+        return false
+      }
+      dupes.add(errorName)
+      return !! errors[errorName]
+    })
+    .map(errorCall => errors[errorCall.callee.property.name])
 }
 
 function marshallAuthentication (authentication) {
@@ -883,7 +883,7 @@ function marshallErrors (errnoMap, defaultsMap, result, errorFunction) {
         const extraData = args[1]
         let params
         switch (extraData.type) {
-          /* eslint-disable indent */
+        /* eslint-disable indent */
           case 'Identifier': {
             let assignment
             const variables = find(errorFunction, {
@@ -950,7 +950,7 @@ function marshallErrorProperty (node, name, errnoMap) {
 
   if (property) {
     switch (property.type) {
-      /* eslint-disable indent */
+    /* eslint-disable indent */
       case 'Literal':
         return property.value
 

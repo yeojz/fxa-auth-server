@@ -104,25 +104,25 @@ describe('/password', () => {
         metricsContext: mockMetricsContext
       })
       return runRoute(passwordRoutes, '/password/forgot/send_code', mockRequest)
-      .then(function(response) {
-        assert.equal(mockDB.accountRecord.callCount, 1, 'db.emailRecord was called once')
+        .then(function(response) {
+          assert.equal(mockDB.accountRecord.callCount, 1, 'db.emailRecord was called once')
 
-        assert.equal(mockDB.createPasswordForgotToken.callCount, 1, 'db.createPasswordForgotToken was called once')
-        var args = mockDB.createPasswordForgotToken.args[0]
-        assert.equal(args.length, 1, 'db.createPasswordForgotToken was passed one argument')
-        assert.deepEqual(args[0].uid, uid, 'db.createPasswordForgotToken was passed the correct uid')
-        assert.equal(args[0].createdAt, undefined, 'db.createPasswordForgotToken was not passed a createdAt timestamp')
+          assert.equal(mockDB.createPasswordForgotToken.callCount, 1, 'db.createPasswordForgotToken was called once')
+          var args = mockDB.createPasswordForgotToken.args[0]
+          assert.equal(args.length, 1, 'db.createPasswordForgotToken was passed one argument')
+          assert.deepEqual(args[0].uid, uid, 'db.createPasswordForgotToken was passed the correct uid')
+          assert.equal(args[0].createdAt, undefined, 'db.createPasswordForgotToken was not passed a createdAt timestamp')
 
-        assert.equal(mockRequest.validateMetricsContext.callCount, 1, 'validateMetricsContext was called')
-        assert.equal(mockLog.flowEvent.callCount, 2, 'log.flowEvent was called twice')
-        assert.equal(mockLog.flowEvent.args[0][0].event, 'password.forgot.send_code.start', 'password.forgot.send_code.start event was logged')
-        assert.equal(mockLog.flowEvent.args[1][0].event, 'password.forgot.send_code.completed', 'password.forgot.send_code.completed event was logged')
+          assert.equal(mockRequest.validateMetricsContext.callCount, 1, 'validateMetricsContext was called')
+          assert.equal(mockLog.flowEvent.callCount, 2, 'log.flowEvent was called twice')
+          assert.equal(mockLog.flowEvent.args[0][0].event, 'password.forgot.send_code.start', 'password.forgot.send_code.start event was logged')
+          assert.equal(mockLog.flowEvent.args[1][0].event, 'password.forgot.send_code.completed', 'password.forgot.send_code.completed event was logged')
 
-        assert.equal(mockMailer.sendRecoveryCode.callCount, 1, 'mailer.sendRecoveryCode was called once')
-        assert.equal(mockMailer.sendRecoveryCode.getCall(0).args[2].location.city, 'Mountain View')
-        assert.equal(mockMailer.sendRecoveryCode.getCall(0).args[2].location.country, 'United States')
-        assert.equal(mockMailer.sendRecoveryCode.getCall(0).args[2].timeZone, 'America/Los_Angeles')
-      })
+          assert.equal(mockMailer.sendRecoveryCode.callCount, 1, 'mailer.sendRecoveryCode was called once')
+          assert.equal(mockMailer.sendRecoveryCode.getCall(0).args[2].location.city, 'Mountain View')
+          assert.equal(mockMailer.sendRecoveryCode.getCall(0).args[2].location.country, 'United States')
+          assert.equal(mockMailer.sendRecoveryCode.getCall(0).args[2].timeZone, 'America/Los_Angeles')
+        })
     }
   )
 
@@ -241,22 +241,22 @@ describe('/password', () => {
         query: {}
       })
       return runRoute(passwordRoutes, '/password/forgot/verify_code', mockRequest)
-      .then(function(response) {
-        assert.deepEqual(Object.keys(response), ['accountResetToken'], 'an accountResetToken was returned')
-        assert.equal(response.accountResetToken, accountResetToken.data.toString('hex'), 'correct accountResetToken was returned')
+        .then(function(response) {
+          assert.deepEqual(Object.keys(response), ['accountResetToken'], 'an accountResetToken was returned')
+          assert.equal(response.accountResetToken, accountResetToken.data.toString('hex'), 'correct accountResetToken was returned')
 
-        assert.equal(mockCustoms.check.callCount, 1, 'customs.check was called once')
+          assert.equal(mockCustoms.check.callCount, 1, 'customs.check was called once')
 
-        assert.equal(mockDB.forgotPasswordVerified.callCount, 1, 'db.passwordForgotVerified was called once')
-        var args = mockDB.forgotPasswordVerified.args[0]
-        assert.equal(args.length, 1, 'db.passwordForgotVerified was passed one argument')
-        assert.deepEqual(args[0].uid, uid, 'db.forgotPasswordVerified was passed the correct token')
+          assert.equal(mockDB.forgotPasswordVerified.callCount, 1, 'db.passwordForgotVerified was called once')
+          var args = mockDB.forgotPasswordVerified.args[0]
+          assert.equal(args.length, 1, 'db.passwordForgotVerified was passed one argument')
+          assert.deepEqual(args[0].uid, uid, 'db.forgotPasswordVerified was passed the correct token')
 
-        assert.equal(mockRequest.validateMetricsContext.callCount, 1, 'validateMetricsContext was called')
-        assert.equal(mockLog.flowEvent.callCount, 2, 'log.flowEvent was called twice')
-        assert.equal(mockLog.flowEvent.args[0][0].event, 'password.forgot.verify_code.start', 'password.forgot.verify_code.start event was logged')
-        assert.equal(mockLog.flowEvent.args[1][0].event, 'password.forgot.verify_code.completed', 'password.forgot.verify_code.completed event was logged')
-      })
+          assert.equal(mockRequest.validateMetricsContext.callCount, 1, 'validateMetricsContext was called')
+          assert.equal(mockLog.flowEvent.callCount, 2, 'log.flowEvent was called twice')
+          assert.equal(mockLog.flowEvent.args[0][0].event, 'password.forgot.verify_code.start', 'password.forgot.verify_code.start event was logged')
+          assert.equal(mockLog.flowEvent.args[1][0].event, 'password.forgot.verify_code.completed', 'password.forgot.verify_code.completed event was logged')
+        })
     }
   )
 
@@ -299,31 +299,31 @@ describe('/password', () => {
         })
 
         return runRoute(passwordRoutes, '/password/change/finish', mockRequest)
-        .then(function(response) {
-          assert.equal(mockDB.deletePasswordChangeToken.callCount, 1)
-          assert.equal(mockDB.resetAccount.callCount, 1)
+          .then(function(response) {
+            assert.equal(mockDB.deletePasswordChangeToken.callCount, 1)
+            assert.equal(mockDB.resetAccount.callCount, 1)
 
-          assert.equal(mockPush.notifyPasswordChanged.callCount, 1, 'sent a push notification of the change')
-          assert.deepEqual(mockPush.notifyPasswordChanged.firstCall.args[0], uid, 'notified the correct uid')
-          assert.deepEqual(mockPush.notifyPasswordChanged.firstCall.args[1], [devices[1]], 'notified only the second device')
+            assert.equal(mockPush.notifyPasswordChanged.callCount, 1, 'sent a push notification of the change')
+            assert.deepEqual(mockPush.notifyPasswordChanged.firstCall.args[0], uid, 'notified the correct uid')
+            assert.deepEqual(mockPush.notifyPasswordChanged.firstCall.args[1], [devices[1]], 'notified only the second device')
 
-          assert.equal(mockDB.account.callCount, 1)
-          assert.equal(mockMailer.sendPasswordChangedNotification.callCount, 1)
-          assert.equal(mockMailer.sendPasswordChangedNotification.firstCall.args[1].email, TEST_EMAIL)
-          assert.equal(mockMailer.sendPasswordChangedNotification.getCall(0).args[2].location.city, 'Mountain View')
-          assert.equal(mockMailer.sendPasswordChangedNotification.getCall(0).args[2].location.country, 'United States')
-          assert.equal(mockMailer.sendPasswordChangedNotification.getCall(0).args[2].timeZone, 'America/Los_Angeles')
+            assert.equal(mockDB.account.callCount, 1)
+            assert.equal(mockMailer.sendPasswordChangedNotification.callCount, 1)
+            assert.equal(mockMailer.sendPasswordChangedNotification.firstCall.args[1].email, TEST_EMAIL)
+            assert.equal(mockMailer.sendPasswordChangedNotification.getCall(0).args[2].location.city, 'Mountain View')
+            assert.equal(mockMailer.sendPasswordChangedNotification.getCall(0).args[2].location.country, 'United States')
+            assert.equal(mockMailer.sendPasswordChangedNotification.getCall(0).args[2].timeZone, 'America/Los_Angeles')
 
-          assert.equal(mockLog.activityEvent.callCount, 1, 'log.activityEvent was called once')
-          var args = mockLog.activityEvent.args[0]
-          assert.equal(args.length, 1, 'log.activityEvent was passed one argument')
-          assert.deepEqual(args[0], {
-            event: 'account.changedPassword',
-            service: undefined,
-            uid: uid.toString('hex'),
-            userAgent: 'test user-agent'
-          }, 'argument was event data')
-        })
+            assert.equal(mockLog.activityEvent.callCount, 1, 'log.activityEvent was called once')
+            var args = mockLog.activityEvent.args[0]
+            assert.equal(args.length, 1, 'log.activityEvent was passed one argument')
+            assert.deepEqual(args[0], {
+              event: 'account.changedPassword',
+              service: undefined,
+              uid: uid.toString('hex'),
+              userAgent: 'test user-agent'
+            }, 'argument was event data')
+          })
       }
     )
 
@@ -364,26 +364,26 @@ describe('/password', () => {
         })
 
         return runRoute(passwordRoutes, '/password/change/finish', mockRequest)
-        .then(function(response) {
-          assert.equal(mockDB.deletePasswordChangeToken.callCount, 1)
-          assert.equal(mockDB.resetAccount.callCount, 1)
+          .then(function(response) {
+            assert.equal(mockDB.deletePasswordChangeToken.callCount, 1)
+            assert.equal(mockDB.resetAccount.callCount, 1)
 
-          assert.equal(mockPush.notifyPasswordChanged.callCount, 1)
-          assert.deepEqual(mockPush.notifyPasswordChanged.firstCall.args[0], uid)
+            assert.equal(mockPush.notifyPasswordChanged.callCount, 1)
+            assert.deepEqual(mockPush.notifyPasswordChanged.firstCall.args[0], uid)
 
-          assert.equal(mockDB.account.callCount, 1)
-          assert.equal(mockMailer.sendPasswordChangedNotification.callCount, 1)
+            assert.equal(mockDB.account.callCount, 1)
+            assert.equal(mockMailer.sendPasswordChangedNotification.callCount, 1)
 
-          assert.equal(mockLog.activityEvent.callCount, 1, 'log.activityEvent was called once')
-          var args = mockLog.activityEvent.args[0]
-          assert.equal(args.length, 1, 'log.activityEvent was passed one argument')
-          assert.deepEqual(args[0], {
-            event: 'account.changedPassword',
-            service: undefined,
-            uid: uid.toString('hex'),
-            userAgent: 'test user-agent'
-          }, 'argument was event data')
-        })
+            assert.equal(mockLog.activityEvent.callCount, 1, 'log.activityEvent was called once')
+            var args = mockLog.activityEvent.args[0]
+            assert.equal(args.length, 1, 'log.activityEvent was passed one argument')
+            assert.deepEqual(args[0], {
+              event: 'account.changedPassword',
+              service: undefined,
+              uid: uid.toString('hex'),
+              userAgent: 'test user-agent'
+            }, 'argument was event data')
+          })
 
       }
     )

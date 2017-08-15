@@ -470,7 +470,7 @@ module.exports = config => {
             headers
           )
         }.bind(this)
-    )
+      )
   }
 
   ClientApi.prototype.passwordForgotStatus = function (passwordForgotTokenHex) {
@@ -583,16 +583,16 @@ module.exports = config => {
   ClientApi.prototype.accountProfile = function (sessionTokenHex, headers) {
     var o = sessionTokenHex ? tokens.SessionToken.fromHex(sessionTokenHex) : P.resolve(null)
     return o.then(
-        function (token) {
-          return this.doRequest(
-            'GET',
-            this.baseURL + '/account/profile',
-            token,
-            undefined,
-            headers
-          )
-        }.bind(this)
-      )
+      function (token) {
+        return this.doRequest(
+          'GET',
+          this.baseURL + '/account/profile',
+          token,
+          undefined,
+          headers
+        )
+      }.bind(this)
+    )
   }
 
   ClientApi.prototype.smsSend = function (sessionTokenHex, phoneNumber, messageId, features) {

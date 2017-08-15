@@ -71,10 +71,10 @@ describe('/certificate/sign', () => {
         userAgent: 'test user-agent'
       }, 'argument was event data')
     })
-    .finally(function () {
-      mockLog.activityEvent.reset()
-      mockDevices.upsert.reset()
-    })
+      .finally(function () {
+        mockLog.activityEvent.reset()
+        mockDevices.upsert.reset()
+      })
   })
 
   it('with service=sync', () => {
@@ -87,10 +87,10 @@ describe('/certificate/sign', () => {
       assert.equal(mockDevices.upsert.callCount, 1, 'devices.upsert was called once')
       assert.equal(mockLog.activityEvent.callCount, 1, 'log.activityEvent was called once')
     })
-    .finally(function () {
-      mockLog.activityEvent.reset()
-      mockDevices.upsert.reset()
-    })
+      .finally(function () {
+        mockLog.activityEvent.reset()
+        mockDevices.upsert.reset()
+      })
   })
 
   it('with service=foo', () => {
@@ -104,10 +104,10 @@ describe('/certificate/sign', () => {
       assert.equal(mockLog.activityEvent.callCount, 1, 'log.activityEvent was called once')
       assert.equal(mockLog.activityEvent.args[0][0].device_id, undefined, 'device_id was undefined')
     })
-    .finally(function () {
-      mockLog.activityEvent.reset()
-      mockDevices.upsert.reset()
-    })
+      .finally(function () {
+        mockLog.activityEvent.reset()
+        mockDevices.upsert.reset()
+      })
   })
 
   it('with deviceId', () => {
@@ -122,10 +122,10 @@ describe('/certificate/sign', () => {
       assert.equal(mockLog.activityEvent.callCount, 1, 'log.activityEvent was called once')
       assert.equal(mockLog.activityEvent.args[0][0].device_id, mockRequest.auth.credentials.deviceId.toString('hex'), 'device_id was correct')
     })
-    .finally(function () {
-      mockLog.activityEvent.reset()
-      mockDevices.upsert.reset()
-    })
+      .finally(function () {
+        mockLog.activityEvent.reset()
+        mockDevices.upsert.reset()
+      })
   })
 
   function runTest (options, request, assertions) {
@@ -139,7 +139,7 @@ describe('/certificate/sign', () => {
           }
         })
     })
-    .then(assertions)
+      .then(assertions)
   }
 
   function makeRoutes (options) {

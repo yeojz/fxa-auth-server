@@ -80,16 +80,16 @@ describe('remote account locale', function() {
         password,
         { lang: Buffer(128).toString('hex') }
       )
-      .then(
-        function (c) {
-          return c.api.accountStatus(c.uid, c.sessionToken)
-        }
-      )
-      .then(
-        function (response) {
-          assert.ok(! response.locale, 'account has no locale')
-        }
-      )
+        .then(
+          function (c) {
+            return c.api.accountStatus(c.uid, c.sessionToken)
+          }
+        )
+        .then(
+          function (response) {
+            assert.ok(! response.locale, 'account has no locale')
+          }
+        )
     }
   )
 
@@ -104,16 +104,16 @@ describe('remote account locale', function() {
         password,
         { lang: 'en-US,en;q=0.8,' + Buffer(128).toString('hex') }
       )
-      .then(
-        function (c) {
-          return c.api.accountStatus(c.uid, c.sessionToken)
-        }
-      )
-      .then(
-        function (response) {
-          assert.equal(response.locale, 'en-US,en;q=0.8', 'account has no locale')
-        }
-      )
+        .then(
+          function (c) {
+            return c.api.accountStatus(c.uid, c.sessionToken)
+          }
+        )
+        .then(
+          function (response) {
+            assert.equal(response.locale, 'en-US,en;q=0.8', 'account has no locale')
+          }
+        )
     }
   )
 

@@ -69,7 +69,7 @@ describe('remote session token expiry', function () {
             () => assert.ok(false, 'client.sessionStatus should have failed'),
             err => assert.equal(err.errno, 110, 'client.sessionStatus returned the correct error')
           )
-        )
+      )
   })
 
   after(() => TestServer.stop(server))

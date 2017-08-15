@@ -314,7 +314,7 @@ those common validations are defined here.
 * `BASE_36`: `/^[a-zA-Z0-9]*$/`
 * `URL_SAFE_BASE_64`: `/^[A-Za-z0-9_-]+$/`
 * `DISPLAY_SAFE_UNICODE`: `/^(?:[^\u0000-\u001F\u007F\u0080-\u009F\u2028-\u2029\uD800-\uDFFF\uE000-\uF8FF\uFFF9-\uFFFF])*$/`
-* `service`: `string, max(16), regex(/^[a-zA-Z0-9\-]*$/g)`
+* `service`: `string, max(16), regex(/^[a-zA-Z0-9-]*$/g)`
 * `E164_NUMBER`: `/^\+[1-9]\d{1,14}$/`
 
 #### lib/metrics/context

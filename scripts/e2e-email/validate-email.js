@@ -75,13 +75,13 @@ function ensureSubjectLang(lang, subject, expectedSubject) {
       var en_gb_sync = 'A new device is now synchronising to your Firefox Account'
       if (! (lang === 'en-GB' && expectedSubject === en_sync && subject === en_gb_sync)) {
         reportError(lang, util.format('strings should be equal: "%s" vs. "%s"',
-                                      subject, expectedSubject))
+          subject, expectedSubject))
       }
     }
   } else {
     if (subject === expectedSubject) {
       reportError(lang, util.format('strings should not be equal:  "%s" vs. "%s"',
-                                    subject, expectedSubject))
+        subject, expectedSubject))
     }
   }
 }
@@ -105,7 +105,7 @@ function checkContent(mail, idx) {
   var xlink = url.parse(mail.headers['x-link'], true)
   if (xlink.pathname !== contentChecks.pathname) {
     reportError(lang, util.format('wrong xlink pathname: %s vs %s',
-                                  xlink.pathname, contentChecks.pathname))
+      xlink.pathname, contentChecks.pathname))
   }
 
   var args = JSON.stringify(contentChecks.args.sort())

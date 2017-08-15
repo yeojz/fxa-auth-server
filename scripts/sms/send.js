@@ -40,7 +40,7 @@ function parseArgs () {
   let acceptLanguage, messageName, phoneNumber
 
   switch (process.argv.length) {
-    /* eslint-disable indent, no-fallthrough */
+  /* eslint-disable indent, no-fallthrough */
     case 5:
       acceptLanguage = process.argv[5]
     case 4:

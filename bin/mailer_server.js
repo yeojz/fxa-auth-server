@@ -27,31 +27,31 @@ P.all(
     require('../lib/senders/templates')()
   ]
 )
-.spread(
-  function (translator, templates) {
-    var mailer = new Mailer(translator, templates, mailConfig)
-    log.info('config', config.getProperties())
-    log.info('mailConfig', mailConfig)
-    log.info('mailerServerConfig', mailerServerConfig)
-    log.info('templates', Object.keys(templates))
+  .spread(
+    function (translator, templates) {
+      var mailer = new Mailer(translator, templates, mailConfig)
+      log.info('config', config.getProperties())
+      log.info('mailConfig', mailConfig)
+      log.info('mailerServerConfig', mailerServerConfig)
+      log.info('templates', Object.keys(templates))
 
-    dbConnect()
-      .then(function (db) {
+      dbConnect()
+        .then(function (db) {
         // fetch and process verification reminders
-        var verificationReminders = require('../lib/senders/verification-reminders')(mailer, db)
-        verificationReminders.poll()
-      })
-      .catch(function (err) {
-        log.error('server', {err: err})
-      })
+          var verificationReminders = require('../lib/senders/verification-reminders')(mailer, db)
+          verificationReminders.poll()
+        })
+        .catch(function (err) {
+          log.error('server', {err: err})
+        })
 
-    var api = restify.createServer({
-      formatters: {
-        'application/json; q=0.9': safeJsonFormatter
-      }
-    })
-    api.use(restify.bodyParser())
-    /*/
+      var api = restify.createServer({
+        formatters: {
+          'application/json; q=0.9': safeJsonFormatter
+        }
+      })
+      api.use(restify.bodyParser())
+      /*/
     {
       type:
       email:
@@ -63,42 +63,42 @@ P.all(
       acceptLanguage:
     }
     /*/
-    api.post(
-      '/send',
-      function (req, res, next) {
-        var type = req.body.type
-        if (typeof(mailer[type]) === 'function') {
-          mailer[type](req.body)
-          res.send(200)
+      api.post(
+        '/send',
+        function (req, res, next) {
+          var type = req.body.type
+          if (typeof(mailer[type]) === 'function') {
+            mailer[type](req.body)
+            res.send(200)
+          }
+          else {
+            log.error('send', { err: { message: 'invalid type', body: req.body }})
+            res.send(400)
+          }
+          next()
         }
-        else {
-          log.error('send', { err: { message: 'invalid type', body: req.body }})
-          res.send(400)
+      )
+
+      api.get(
+        '/',
+        function (req, res, next) {
+          res.send({ version: packageJson.version })
+          next()
         }
-        next()
-      }
-    )
+      )
 
-    api.get(
-      '/',
-      function (req, res, next) {
-        res.send({ version: packageJson.version })
-        next()
-      }
-    )
-
-    api.listen(
-      mailerServerConfig.port,
-      mailerServerConfig.host,
-      function () {
-        log.info('listening', { port: mailerServerConfig.port, host: mailerServerConfig.host })
-      }
-    )
-  }
-)
-.catch(
-  function (err) {
-    log.error('init', err)
-    process.exit(8)
-  }
-)
+      api.listen(
+        mailerServerConfig.port,
+        mailerServerConfig.host,
+        function () {
+          log.info('listening', { port: mailerServerConfig.port, host: mailerServerConfig.host })
+        }
+      )
+    }
+  )
+  .catch(
+    function (err) {
+      log.error('init', err)
+      process.exit(8)
+    }
+  )

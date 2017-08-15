@@ -202,7 +202,8 @@ var conf = convict({
       doc: 'SMTP password',
       format: String,
       default: undefined,
-      env: 'SMTP_PASS'
+      env: 'SMTP_PASS',
+      sensitive: true
     },
     sender: {
       doc: 'email address of the sender',
@@ -782,7 +783,7 @@ var envConfig = path.join(__dirname, conf.get('env') + '.json')
 envConfig = envConfig + ',' + (process.env.CONFIG_FILES || '')
 var files = envConfig.split(',').filter(fs.existsSync)
 conf.loadFile(files)
-conf.validate({ strict: true })
+conf.validate({ allowed: 'strict' })
 
 // set the public url as the issuer domain for assertions
 conf.set('domain', url.parse(conf.get('publicUrl')).host)

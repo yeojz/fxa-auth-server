@@ -126,14 +126,14 @@ describe('push', () => {
       var data = Buffer.from('foobar')
       var options = { data: data, excludedDeviceIds: excluded, TTL: TTL }
       return push.pushToAllDevices(mockUid, 'deviceConnected', options)
-      .then(function() {
-        assert.ok(push.sendPush.calledOnce, 'push was called')
-        assert.equal(push.sendPush.getCall(0).args[0], mockUid)
-        assert.deepEqual(push.sendPush.getCall(0).args[1], [mockDevices[1]])
-        assert.equal(push.sendPush.getCall(0).args[2], 'deviceConnected')
-        assert.deepEqual(push.sendPush.getCall(0).args[3], { data: data, TTL: TTL })
-        push.sendPush.restore()
-      })
+        .then(function() {
+          assert.ok(push.sendPush.calledOnce, 'push was called')
+          assert.equal(push.sendPush.getCall(0).args[0], mockUid)
+          assert.deepEqual(push.sendPush.getCall(0).args[1], [mockDevices[1]])
+          assert.equal(push.sendPush.getCall(0).args[2], 'deviceConnected')
+          assert.deepEqual(push.sendPush.getCall(0).args[3], { data: data, TTL: TTL })
+          push.sendPush.restore()
+        })
     }
   )
 
@@ -145,14 +145,14 @@ describe('push', () => {
       var data = Buffer.from('foobar')
       var options = { data: data, TTL: TTL }
       return push.pushToDevices(mockUid, [mockDevices[0].id], 'deviceConnected', options)
-      .then(function() {
-        assert.ok(push.sendPush.calledOnce, 'push was called')
-        assert.equal(push.sendPush.getCall(0).args[0], mockUid)
-        assert.deepEqual(push.sendPush.getCall(0).args[1], [mockDevices[0]])
-        assert.equal(push.sendPush.getCall(0).args[2], 'deviceConnected')
-        assert.deepEqual(push.sendPush.getCall(0).args[3], { data: data, TTL: TTL })
-        push.sendPush.restore()
-      })
+        .then(function() {
+          assert.ok(push.sendPush.calledOnce, 'push was called')
+          assert.equal(push.sendPush.getCall(0).args[0], mockUid)
+          assert.deepEqual(push.sendPush.getCall(0).args[1], [mockDevices[0]])
+          assert.equal(push.sendPush.getCall(0).args[2], 'deviceConnected')
+          assert.deepEqual(push.sendPush.getCall(0).args[3], { data: data, TTL: TTL })
+          push.sendPush.restore()
+        })
     }
   )
 
@@ -560,12 +560,12 @@ describe('push', () => {
       var push = require(pushModulePath)(mockLog(), mockDbEmpty, mockConfig)
       sinon.spy(push, 'pushToAllDevices')
       return push.notifyUpdate(mockUid, 'passwordReset')
-      .then(function() {
-        assert.ok(push.pushToAllDevices.calledOnce, 'pushToAllDevices was called')
-        assert.equal(push.pushToAllDevices.getCall(0).args[0], mockUid)
-        assert.equal(push.pushToAllDevices.getCall(0).args[1], 'passwordReset')
-        push.pushToAllDevices.restore()
-      })
+        .then(function() {
+          assert.ok(push.pushToAllDevices.calledOnce, 'pushToAllDevices was called')
+          assert.equal(push.pushToAllDevices.getCall(0).args[0], mockUid)
+          assert.equal(push.pushToAllDevices.getCall(0).args[1], 'passwordReset')
+          push.pushToAllDevices.restore()
+        })
     }
   )
 
@@ -575,12 +575,12 @@ describe('push', () => {
       var push = require(pushModulePath)(mockLog(), mockDbEmpty, mockConfig)
       sinon.spy(push, 'pushToAllDevices')
       return push.notifyUpdate(mockUid)
-      .then(function() {
-        assert.ok(push.pushToAllDevices.calledOnce, 'pushToAllDevices was called')
-        assert.equal(push.pushToAllDevices.getCall(0).args[0], mockUid)
-        assert.equal(push.pushToAllDevices.getCall(0).args[1], 'accountVerify')
-        push.pushToAllDevices.restore()
-      })
+        .then(function() {
+          assert.ok(push.pushToAllDevices.calledOnce, 'pushToAllDevices was called')
+          assert.equal(push.pushToAllDevices.getCall(0).args[0], mockUid)
+          assert.equal(push.pushToAllDevices.getCall(0).args[1], 'accountVerify')
+          push.pushToAllDevices.restore()
+        })
     }
   )
 
@@ -602,19 +602,19 @@ describe('push', () => {
         assert.fail('must not throw')
         throw err
       })
-      .then(function() {
-        assert.ok(push.pushToAllDevices.calledOnce, 'pushToAllDevices was called')
-        assert.equal(push.pushToAllDevices.getCall(0).args[0], mockUid)
-        assert.equal(push.pushToAllDevices.getCall(0).args[1], 'deviceConnected')
-        var options = push.pushToAllDevices.getCall(0).args[2]
-        var payload = JSON.parse(options.data.toString('utf8'))
-        assert.deepEqual(payload, expectedData)
-        var schemaPath = path.resolve(__dirname, PUSH_PAYLOADS_SCHEMA_PATH)
-        var schema = JSON.parse(fs.readFileSync(schemaPath))
-        assert.ok(ajv.validate(schema, payload))
-        assert.deepEqual(options.excludedDeviceIds, [deviceId])
-        push.pushToAllDevices.restore()
-      })
+        .then(function() {
+          assert.ok(push.pushToAllDevices.calledOnce, 'pushToAllDevices was called')
+          assert.equal(push.pushToAllDevices.getCall(0).args[0], mockUid)
+          assert.equal(push.pushToAllDevices.getCall(0).args[1], 'deviceConnected')
+          var options = push.pushToAllDevices.getCall(0).args[2]
+          var payload = JSON.parse(options.data.toString('utf8'))
+          assert.deepEqual(payload, expectedData)
+          var schemaPath = path.resolve(__dirname, PUSH_PAYLOADS_SCHEMA_PATH)
+          var schema = JSON.parse(fs.readFileSync(schemaPath))
+          assert.ok(ajv.validate(schema, payload))
+          assert.deepEqual(options.excludedDeviceIds, [deviceId])
+          push.pushToAllDevices.restore()
+        })
     }
   )
 
@@ -642,19 +642,19 @@ describe('push', () => {
         assert.fail('must not throw')
         throw err
       })
-      .then(function() {
-        assert.ok(push.pushToAllDevices.calledOnce, 'pushToAllDevices was called')
-        assert.equal(push.pushToAllDevices.getCall(0).args[0], mockUid)
-        assert.equal(push.pushToAllDevices.getCall(0).args[1], 'deviceDisconnected')
-        var options = push.pushToAllDevices.getCall(0).args[2]
-        var payload = JSON.parse(options.data.toString('utf8'))
-        assert.deepEqual(payload, expectedData)
-        var schemaPath = path.resolve(__dirname, PUSH_PAYLOADS_SCHEMA_PATH)
-        var schema = JSON.parse(fs.readFileSync(schemaPath))
-        assert.ok(ajv.validate(schema, payload))
-        assert.ok(options.TTL, 'TTL should be set')
-        push.pushToAllDevices.restore()
-      })
+        .then(function() {
+          assert.ok(push.pushToAllDevices.calledOnce, 'pushToAllDevices was called')
+          assert.equal(push.pushToAllDevices.getCall(0).args[0], mockUid)
+          assert.equal(push.pushToAllDevices.getCall(0).args[1], 'deviceDisconnected')
+          var options = push.pushToAllDevices.getCall(0).args[2]
+          var payload = JSON.parse(options.data.toString('utf8'))
+          assert.deepEqual(payload, expectedData)
+          var schemaPath = path.resolve(__dirname, PUSH_PAYLOADS_SCHEMA_PATH)
+          var schema = JSON.parse(fs.readFileSync(schemaPath))
+          assert.ok(ajv.validate(schema, payload))
+          assert.ok(options.TTL, 'TTL should be set')
+          push.pushToAllDevices.restore()
+        })
     }
   )
 
@@ -678,19 +678,19 @@ describe('push', () => {
         assert.fail('must not throw')
         throw err
       })
-      .then(function() {
-        assert.ok(push.sendPush.calledOnce, 'sendPush was called')
-        assert.equal(push.sendPush.getCall(0).args[0], mockUid)
-        assert.equal(push.sendPush.getCall(0).args[1], mockDevices)
-        assert.equal(push.sendPush.getCall(0).args[2], 'passwordChange')
-        var options = push.sendPush.getCall(0).args[3]
-        var payload = JSON.parse(options.data.toString('utf8'))
-        assert.deepEqual(payload, expectedData)
-        var schemaPath = path.resolve(__dirname, PUSH_PAYLOADS_SCHEMA_PATH)
-        var schema = JSON.parse(fs.readFileSync(schemaPath))
-        assert.ok(ajv.validate(schema, payload))
-        push.sendPush.restore()
-      })
+        .then(function() {
+          assert.ok(push.sendPush.calledOnce, 'sendPush was called')
+          assert.equal(push.sendPush.getCall(0).args[0], mockUid)
+          assert.equal(push.sendPush.getCall(0).args[1], mockDevices)
+          assert.equal(push.sendPush.getCall(0).args[2], 'passwordChange')
+          var options = push.sendPush.getCall(0).args[3]
+          var payload = JSON.parse(options.data.toString('utf8'))
+          assert.deepEqual(payload, expectedData)
+          var schemaPath = path.resolve(__dirname, PUSH_PAYLOADS_SCHEMA_PATH)
+          var schema = JSON.parse(fs.readFileSync(schemaPath))
+          assert.ok(ajv.validate(schema, payload))
+          push.sendPush.restore()
+        })
     }
   )
 
@@ -714,19 +714,19 @@ describe('push', () => {
         assert.fail('must not throw')
         throw err
       })
-      .then(function() {
-        assert.ok(push.sendPush.calledOnce, 'sendPush was called')
-        assert.equal(push.sendPush.getCall(0).args[0], mockUid)
-        assert.equal(push.sendPush.getCall(0).args[1], mockDevices)
-        assert.equal(push.sendPush.getCall(0).args[2], 'passwordReset')
-        var options = push.sendPush.getCall(0).args[3]
-        var payload = JSON.parse(options.data.toString('utf8'))
-        assert.deepEqual(payload, expectedData)
-        var schemaPath = path.resolve(__dirname, PUSH_PAYLOADS_SCHEMA_PATH)
-        var schema = JSON.parse(fs.readFileSync(schemaPath))
-        assert.ok(ajv.validate(schema, payload))
-        push.sendPush.restore()
-      })
+        .then(function() {
+          assert.ok(push.sendPush.calledOnce, 'sendPush was called')
+          assert.equal(push.sendPush.getCall(0).args[0], mockUid)
+          assert.equal(push.sendPush.getCall(0).args[1], mockDevices)
+          assert.equal(push.sendPush.getCall(0).args[2], 'passwordReset')
+          var options = push.sendPush.getCall(0).args[3]
+          var payload = JSON.parse(options.data.toString('utf8'))
+          assert.deepEqual(payload, expectedData)
+          var schemaPath = path.resolve(__dirname, PUSH_PAYLOADS_SCHEMA_PATH)
+          var schema = JSON.parse(fs.readFileSync(schemaPath))
+          assert.ok(ajv.validate(schema, payload))
+          push.sendPush.restore()
+        })
     }
   )
 
@@ -753,19 +753,19 @@ describe('push', () => {
         assert.fail('must not throw')
         throw err
       })
-      .then(function() {
-        assert.ok(push.sendPush.calledOnce, 'sendPush was called')
-        assert.equal(push.sendPush.getCall(0).args[0], mockUid)
-        assert.equal(push.sendPush.getCall(0).args[1], mockDevices)
-        assert.equal(push.sendPush.getCall(0).args[2], 'accountDestroyed')
-        var options = push.sendPush.getCall(0).args[3]
-        var payload = JSON.parse(options.data.toString('utf8'))
-        assert.deepEqual(payload, expectedData)
-        var schemaPath = path.resolve(__dirname, PUSH_PAYLOADS_SCHEMA_PATH)
-        var schema = JSON.parse(fs.readFileSync(schemaPath))
-        assert.ok(ajv.validate(schema, payload))
-        push.sendPush.restore()
-      })
+        .then(function() {
+          assert.ok(push.sendPush.calledOnce, 'sendPush was called')
+          assert.equal(push.sendPush.getCall(0).args[0], mockUid)
+          assert.equal(push.sendPush.getCall(0).args[1], mockDevices)
+          assert.equal(push.sendPush.getCall(0).args[2], 'accountDestroyed')
+          var options = push.sendPush.getCall(0).args[3]
+          var payload = JSON.parse(options.data.toString('utf8'))
+          assert.deepEqual(payload, expectedData)
+          var schemaPath = path.resolve(__dirname, PUSH_PAYLOADS_SCHEMA_PATH)
+          var schema = JSON.parse(fs.readFileSync(schemaPath))
+          assert.ok(ajv.validate(schema, payload))
+          push.sendPush.restore()
+        })
     }
   )
 

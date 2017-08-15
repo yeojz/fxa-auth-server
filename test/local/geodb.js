@@ -28,14 +28,14 @@ describe('geodb', () => {
 
       const getGeoData = proxyquire(modulePath, moduleMocks)(thisMockLog)
       return getGeoData('63.245.221.32') // MTV
-      .then(function (geoData) {
-        assert.equal(geoData.location.city, 'Mountain View')
-        assert.equal(geoData.location.country, 'United States')
-        assert.equal(geoData.location.countryCode, 'US')
-        assert.equal(geoData.timeZone, 'America/Los_Angeles')
-        assert.equal(geoData.location.state, 'California')
-        assert.equal(geoData.location.stateCode, 'CA')
-      })
+        .then(function (geoData) {
+          assert.equal(geoData.location.city, 'Mountain View')
+          assert.equal(geoData.location.country, 'United States')
+          assert.equal(geoData.location.countryCode, 'US')
+          assert.equal(geoData.timeZone, 'America/Los_Angeles')
+          assert.equal(geoData.location.state, 'California')
+          assert.equal(geoData.location.stateCode, 'CA')
+        })
     }
   )
 
@@ -57,9 +57,9 @@ describe('geodb', () => {
 
       const getGeoData = proxyquire(modulePath, moduleMocks)(thisMockLog)
       return getGeoData('8.8.8.8')
-      .then(function (geoData) {
-        assert.deepEqual(geoData, {})
-      })
+        .then(function (geoData) {
+          assert.deepEqual(geoData, {})
+        })
     }
   )
 })

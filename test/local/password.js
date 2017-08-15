@@ -20,16 +20,16 @@ describe('Password', () => {
       var p2 = new Password(pwd, salt, 0)
       assert.equal(p2.version, 0, 'should be using version zero')
       return p1.verifyHash()
-      .then(
-        function (hash) {
-          return p2.matches(hash)
-        }
-      )
-      .then(
-        function (matched) {
-          assert.ok(matched, 'identical passwords should match')
-        }
-      )
+        .then(
+          function (hash) {
+            return p2.matches(hash)
+          }
+        )
+        .then(
+          function (matched) {
+            assert.ok(matched, 'identical passwords should match')
+          }
+        )
     }
   )
 
@@ -43,16 +43,16 @@ describe('Password', () => {
       var p2 = new Password(pwd, salt, 1)
       assert.equal(p2.version, 1, 'should be using version one')
       return p1.verifyHash()
-      .then(
-        function (hash) {
-          return p2.matches(hash)
-        }
-      )
-      .then(
-        function (matched) {
-          assert.ok(matched, 'identical passwords should match')
-        }
-      )
+        .then(
+          function (hash) {
+            return p2.matches(hash)
+          }
+        )
+        .then(
+          function (matched) {
+            assert.ok(matched, 'identical passwords should match')
+          }
+        )
     }
   )
 
@@ -64,16 +64,16 @@ describe('Password', () => {
       var p1 = new Password(pwd, salt, 0)
       var p2 = new Password(pwd, salt, 1)
       return p1.verifyHash()
-      .then(
-        function (hash) {
-          return p2.matches(hash)
-        }
-      )
-      .then(
-        function (matched) {
-          assert.ok(! matched, 'passwords should not match')
-        }
-      )
+        .then(
+          function (hash) {
+            return p2.matches(hash)
+          }
+        )
+        .then(
+          function (matched) {
+            assert.ok(! matched, 'passwords should not match')
+          }
+        )
     }
   )
 

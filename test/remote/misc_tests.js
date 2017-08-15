@@ -211,20 +211,20 @@ describe('remote misc', function() {
         // See payload.maxBytes in ../../server/server.js
         { big: Buffer(8192).toString('hex')}
       )
-      .then(
-        function (body) {
-          assert(false, 'request should have failed')
-        },
-        function (err) {
-          if (err.errno) {
-            assert.equal(err.errno, 113, 'payload too large')
-          }
-          else {
+        .then(
+          function (body) {
+            assert(false, 'request should have failed')
+          },
+          function (err) {
+            if (err.errno) {
+              assert.equal(err.errno, 113, 'payload too large')
+            }
+            else {
             // nginx returns an html response
-            assert.ok(/413 Request Entity Too Large/.test(err), 'payload too large')
+              assert.ok(/413 Request Entity Too Large/.test(err), 'payload too large')
+            }
           }
-        }
-      )
+        )
     }
   )
 
@@ -249,39 +249,39 @@ describe('remote misc', function() {
         return client.api.doRequest('GET', config.publicUrl + url)
       }
       return fetch('/.well-known/browserid')
-      .then(
-        function (doc) {
-          assert.ok(doc.hasOwnProperty('public-key'), 'doc has public key')
-          assert.ok(/^[0-9]+$/.test(doc['public-key'].n), 'n is base 10')
-          assert.ok(/^[0-9]+$/.test(doc['public-key'].e), 'e is base 10')
-          assert.ok(doc.hasOwnProperty('authentication'), 'doc has auth page')
-          assert.ok(doc.hasOwnProperty('provisioning'), 'doc has provisioning page')
-          assert.equal(doc.keys.length, 1)
-          return doc
-        }
-      )
-      .then(
-        function (doc) {
-          return fetch(doc.authentication)
-          .then(
-            function (authPage) {
-              assert.ok(authPage, 'auth page can be fetched')
-              return doc
-            }
-          )
-        }
-      )
-      .then(
-        function (doc) {
-          return fetch(doc.provisioning)
-          .then(
-            function (provPage) {
-              assert.ok(provPage, 'provisioning page can be fetched')
-              return doc
-            }
-          )
-        }
-      )
+        .then(
+          function (doc) {
+            assert.ok(doc.hasOwnProperty('public-key'), 'doc has public key')
+            assert.ok(/^[0-9]+$/.test(doc['public-key'].n), 'n is base 10')
+            assert.ok(/^[0-9]+$/.test(doc['public-key'].e), 'e is base 10')
+            assert.ok(doc.hasOwnProperty('authentication'), 'doc has auth page')
+            assert.ok(doc.hasOwnProperty('provisioning'), 'doc has provisioning page')
+            assert.equal(doc.keys.length, 1)
+            return doc
+          }
+        )
+        .then(
+          function (doc) {
+            return fetch(doc.authentication)
+              .then(
+                function (authPage) {
+                  assert.ok(authPage, 'auth page can be fetched')
+                  return doc
+                }
+              )
+          }
+        )
+        .then(
+          function (doc) {
+            return fetch(doc.provisioning)
+              .then(
+                function (provPage) {
+                  assert.ok(provPage, 'provisioning page can be fetched')
+                  return doc
+                }
+              )
+          }
+        )
     }
   )
 

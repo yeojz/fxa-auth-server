@@ -70,7 +70,7 @@ function runTest (route, request, assertions) {
       }
     })
   })
-  .then(assertions)
+    .then(assertions)
 }
 
 describe('/account/reset', function () {

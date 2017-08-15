@@ -42,7 +42,7 @@ describe('password_check', () => {
       MockCustoms.flag.reset()
 
       var password = new Password(
-          authPW, emailRecord.authSalt, emailRecord.verifierVersion)
+        authPW, emailRecord.authSalt, emailRecord.verifierVersion)
 
       return password.verifyHash()
         .then(
@@ -75,7 +75,7 @@ describe('password_check', () => {
       MockCustoms.flag.reset()
 
       var password = new Password(
-              authPW, emailRecord.authSalt, emailRecord.verifierVersion)
+        authPW, emailRecord.authSalt, emailRecord.verifierVersion)
 
       return password.verifyHash()
         .then(

@@ -17,19 +17,19 @@ var program
 function configure() {
   commander
     .option('-a, --auth-server [url]',
-            'URL of FxA Auth Server',
-            'https://api-accounts.stage.mozaws.net')
+      'URL of FxA Auth Server',
+      'https://api-accounts.stage.mozaws.net')
     .option('-l, --locales [path]',
-            'Path to file with a list of locales to test',
-            '../../config/supportedLanguages.js')
+      'Path to file with a list of locales to test',
+      '../../config/supportedLanguages.js')
     .option('-r, --restmail-domain [fqdn]',
-            'URL of the restmail server',
-            'restmail.net')
+      'URL of the restmail server',
+      'restmail.net')
     .option('-L, --locale <en[,zh-TW,de,...]>',
-            'Test only this csv list of locales',
-            function(list) {
-              return list.split(/,/)
-            })
+      'Test only this csv list of locales',
+      function(list) {
+        return list.split(/,/)
+      })
     .parse(process.argv)
 
   commander.basename = crypto.randomBytes(8).toString('hex')
@@ -99,10 +99,10 @@ function signupForSync(lang) {
   }
 
   return Client.createAndVerify(program.authServer,
-                                email,
-                                program.password,
-                                program.mailserver,
-                                options)
+    email,
+    program.password,
+    program.mailserver,
+    options)
 }
 
 function signinAsSecondDevice(client) {

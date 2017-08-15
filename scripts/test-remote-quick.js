@@ -11,16 +11,16 @@ var TestServer = require('../test/test_server')
 
 TestServer.start(config, false)
   .then(
-  function (server) {
-    var cp = spawn(
-      path.join(path.dirname(__dirname), 'node_modules/.bin/mocha'),
-      ['test/remote'],
-      { stdio: 'inherit' }
-    )
+    function (server) {
+      var cp = spawn(
+        path.join(path.dirname(__dirname), 'node_modules/.bin/mocha'),
+        ['test/remote'],
+        { stdio: 'inherit' }
+      )
 
-    cp.on('close', function(code) {
-      server.stop()
-    })
-  }
-)
+      cp.on('close', function(code) {
+        server.stop()
+      })
+    }
+  )
 

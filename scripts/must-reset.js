@@ -67,12 +67,12 @@ DB.connect(config[config.db.backend])
               verifierVersion: 1
             }
           )
-          .catch(function (err) {
-            log.error({ op: 'reset.failed', uid: uid, err: err })
-            process.exit(1)
-          })
+            .catch(function (err) {
+              log.error({ op: 'reset.failed', uid: uid, err: err })
+              process.exit(1)
+            })
         }
-        ))
+      ))
         .then(
           function () {
             log.info({ complete: true, uidsReset: uids.length })

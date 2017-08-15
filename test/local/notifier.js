@@ -48,7 +48,7 @@ describe('notifier', () => {
       op: 'Notifier.publish',
       data: {
         TopicArn: 'arn:aws:sns:us-west-2:927034868275:foo',
-        Message: '{\"event\":{\"stuff\":true}}'
+        Message: '{"event":{"stuff":true}}'
       },
       success: true
     })

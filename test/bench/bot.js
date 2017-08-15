@@ -46,17 +46,17 @@ function session(c) {
 
 function run(c) {
   return c.create()
-  .then(times(session, 10))
-  .then(c.changePassword.bind(c, 'newPassword'))
-  .then(
-    function () {
-      return c.destroyAccount()
-    },
-    function (err) {
-      console.error('Error during run:', err.message)
-      return c.destroyAccount()
-    }
-  )
+    .then(times(session, 10))
+    .then(c.changePassword.bind(c, 'newPassword'))
+    .then(
+      function () {
+        return c.destroyAccount()
+      },
+      function (err) {
+        console.error('Error during run:', err.message)
+        return c.destroyAccount()
+      }
+    )
 }
 
 var client = new Client(config.origin)

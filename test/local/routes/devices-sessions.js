@@ -244,10 +244,10 @@ describe('/account/devices/notify', function () {
     return runTest(route, mockRequest, function () {
       assert(false, 'should have thrown')
     })
-    .then(() => assert.ok(false), function (err) {
-      assert.equal(err.output.statusCode, 400, 'correct status code is returned')
-      assert.equal(err.errno, error.ERRNO.INVALID_PARAMETER, 'correct errno is returned')
-    })
+      .then(() => assert.ok(false), function (err) {
+        assert.equal(err.output.statusCode, 400, 'correct status code is returned')
+        assert.equal(err.errno, error.ERRNO.INVALID_PARAMETER, 'correct errno is returned')
+      })
   })
 
   it('specific devices', function () {

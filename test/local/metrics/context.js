@@ -465,11 +465,11 @@ describe('metricsContext', () => {
           credentials: token
         }
       })
-      .then(() => assert.fail('call to metricsContext.clear should have failed'))
-      .catch(err => {
-        assert.equal(err.message, 'blee', 'metricsContext.clear should have rejected with memcached error')
-        assert.equal(cache.del.callCount, 1, 'cache.del was called once')
-      })
+        .then(() => assert.fail('call to metricsContext.clear should have failed'))
+        .catch(err => {
+          assert.equal(err.message, 'blee', 'metricsContext.clear should have rejected with memcached error')
+          assert.equal(cache.del.callCount, 1, 'cache.del was called once')
+        })
     }
   )
 

@@ -82,11 +82,11 @@ module.exports = config => {
       .then(
         function () {
           return c.changePassword(newPassword, headers)
-          .then(
-            function () {
-              return c
-            }
-          )
+            .then(
+              function () {
+                return c
+              }
+            )
         }
       )
   }
@@ -149,16 +149,16 @@ module.exports = config => {
       this.authPW,
       this.options
     )
-    .then(
-      function (a) {
-        this.uid = a.uid
-        this.authAt = a.authAt
-        this.sessionToken = a.sessionToken
-        this.keyFetchToken = a.keyFetchToken
-        this.device = a.device
-        return this
-      }.bind(this)
-    )
+      .then(
+        function (a) {
+          this.uid = a.uid
+          this.authAt = a.authAt
+          this.sessionToken = a.sessionToken
+          this.keyFetchToken = a.keyFetchToken
+          this.device = a.device
+          return this
+        }.bind(this)
+      )
   }
 
   Client.prototype._clear = function () {
@@ -249,11 +249,11 @@ module.exports = config => {
         return this.api.certificateSign(this.sessionToken, publicKey, duration, locale, options)
       }.bind(this)
     )
-    .then(
-      function (x) {
-        return x.cert
-      }
-    )
+      .then(
+        function (x) {
+          return x.cert
+        }
+      )
   }
 
   Client.prototype.changePassword = function (newPassword, headers, sessionToken) {
@@ -297,29 +297,29 @@ module.exports = config => {
         return this.api.accountKeys(this.keyFetchToken)
       }.bind(this)
     )
-    .then(
-      function (data) {
-        return tokens.KeyFetchToken.fromHex(this.keyFetchToken)
-          .then(
-            function (token) {
-              return token.unbundleKeys(data.bundle)
-            }
-          )
-      }.bind(this)
-    )
-    .then(
-      function (keys) {
-        this.keyFetchToken = null
-        this.kA = keys.kA
-        this.wrapKb = keys.wrapKb
-        this.kB = keys.kB = butil.xorBuffers(this.wrapKb, this.unwrapBKey).toString('hex')
-        return keys
-      }.bind(this),
-      function (err) {
-        if (err && err.errno !== 104) { this.keyFetchToken = null }
-        throw err
-      }.bind(this)
-    )
+      .then(
+        function (data) {
+          return tokens.KeyFetchToken.fromHex(this.keyFetchToken)
+            .then(
+              function (token) {
+                return token.unbundleKeys(data.bundle)
+              }
+            )
+        }.bind(this)
+      )
+      .then(
+        function (keys) {
+          this.keyFetchToken = null
+          this.kA = keys.kA
+          this.wrapKb = keys.wrapKb
+          this.kB = keys.kB = butil.xorBuffers(this.wrapKb, this.unwrapBKey).toString('hex')
+          return keys
+        }.bind(this),
+        function (err) {
+          if (err && err.errno !== 104) { this.keyFetchToken = null }
+          throw err
+        }.bind(this)
+      )
   }
 
   Client.prototype.devices = function () {
@@ -338,14 +338,14 @@ module.exports = config => {
         return this.api.accountDevice(this.sessionToken, info)
       }.bind(this)
     )
-    .then(
-      function (device) {
-        if (! this.device || this.device.id === device.id) {
-          this.device = device
-        }
-        return device
-      }.bind(this)
-    )
+      .then(
+        function (device) {
+          if (! this.device || this.device.id === device.id) {
+            this.device = device
+          }
+          return device
+        }.bind(this)
+      )
   }
 
   Client.prototype.destroyDevice = function (id) {
@@ -355,11 +355,11 @@ module.exports = config => {
         return this.api.deviceDestroy(this.sessionToken, id)
       }.bind(this)
     )
-    .then(
-      function () {
-        delete this.sessionToken
-      }.bind(this)
-    )
+      .then(
+        function () {
+          delete this.sessionToken
+        }.bind(this)
+      )
   }
 
   Client.prototype.sessionStatus = function () {

@@ -97,57 +97,57 @@ describe('remote push db', function() {
       }
 
       return db.createAccount(ACCOUNT)
-          .then(function() {
-            return db.emailRecord(ACCOUNT.email)
-          })
-          .then(function(emailRecord) {
-            emailRecord.createdAt = Date.now()
-            return db.createSessionToken(emailRecord, SESSION_TOKEN_UA)
-          })
+        .then(function() {
+          return db.emailRecord(ACCOUNT.email)
+        })
+        .then(function(emailRecord) {
+          emailRecord.createdAt = Date.now()
+          return db.createSessionToken(emailRecord, SESSION_TOKEN_UA)
+        })
 
-          .then(function (sessionToken) {
-            sessionTokenId = sessionToken.tokenId
-            return db.createDevice(ACCOUNT.uid, sessionTokenId, deviceInfo)
-          })
-          .then(function (device) {
-            assert.equal(device.name, deviceInfo.name)
-            assert.equal(device.pushCallback, deviceInfo.pushCallback)
-            assert.equal(device.pushPublicKey, deviceInfo.pushPublicKey)
-            assert.equal(device.pushAuthKey, deviceInfo.pushAuthKey)
-          })
-          .then(function () {
-            return db.devices(ACCOUNT.uid)
-          })
+        .then(function (sessionToken) {
+          sessionTokenId = sessionToken.tokenId
+          return db.createDevice(ACCOUNT.uid, sessionTokenId, deviceInfo)
+        })
+        .then(function (device) {
+          assert.equal(device.name, deviceInfo.name)
+          assert.equal(device.pushCallback, deviceInfo.pushCallback)
+          assert.equal(device.pushPublicKey, deviceInfo.pushPublicKey)
+          assert.equal(device.pushAuthKey, deviceInfo.pushAuthKey)
+        })
+        .then(function () {
+          return db.devices(ACCOUNT.uid)
+        })
 
-          .then(function () {
-            var pushWithUnknown400 = proxyquire('../../lib/push', mocksUnknown400)(mockLog, db, {})
-            return pushWithUnknown400.pushToAllDevices(ACCOUNT.uid, 'accountVerify')
-          })
-          .then(function () {
-            return db.devices(ACCOUNT.uid)
-          })
-          .then(function (devices) {
-            var device = devices[0]
-            assert.equal(device.name, deviceInfo.name)
-            assert.equal(device.pushCallback, deviceInfo.pushCallback)
-            assert.equal(device.pushPublicKey, deviceInfo.pushPublicKey, 'device.pushPublicKey is correct')
-            assert.equal(device.pushAuthKey, deviceInfo.pushAuthKey, 'device.pushAuthKey is correct')
-          })
+        .then(function () {
+          var pushWithUnknown400 = proxyquire('../../lib/push', mocksUnknown400)(mockLog, db, {})
+          return pushWithUnknown400.pushToAllDevices(ACCOUNT.uid, 'accountVerify')
+        })
+        .then(function () {
+          return db.devices(ACCOUNT.uid)
+        })
+        .then(function (devices) {
+          var device = devices[0]
+          assert.equal(device.name, deviceInfo.name)
+          assert.equal(device.pushCallback, deviceInfo.pushCallback)
+          assert.equal(device.pushPublicKey, deviceInfo.pushPublicKey, 'device.pushPublicKey is correct')
+          assert.equal(device.pushAuthKey, deviceInfo.pushAuthKey, 'device.pushAuthKey is correct')
+        })
 
-          .then(function () {
-            var pushWithKnown400 = proxyquire('../../lib/push', mocksKnown400)(mockLog, db, {})
-            return pushWithKnown400.pushToAllDevices(ACCOUNT.uid, 'accountVerify')
-          })
-          .then(function () {
-            return db.devices(ACCOUNT.uid)
-          })
-          .then(function (devices) {
-            var device = devices[0]
-            assert.equal(device.name, deviceInfo.name)
-            assert.equal(device.pushCallback, '')
-            assert.equal(device.pushPublicKey, '', 'device.pushPublicKey is correct')
-            assert.equal(device.pushAuthKey, '', 'device.pushAuthKey is correct')
-          })
+        .then(function () {
+          var pushWithKnown400 = proxyquire('../../lib/push', mocksKnown400)(mockLog, db, {})
+          return pushWithKnown400.pushToAllDevices(ACCOUNT.uid, 'accountVerify')
+        })
+        .then(function () {
+          return db.devices(ACCOUNT.uid)
+        })
+        .then(function (devices) {
+          var device = devices[0]
+          assert.equal(device.name, deviceInfo.name)
+          assert.equal(device.pushCallback, '')
+          assert.equal(device.pushPublicKey, '', 'device.pushPublicKey is correct')
+          assert.equal(device.pushAuthKey, '', 'device.pushAuthKey is correct')
+        })
     }
   )
 

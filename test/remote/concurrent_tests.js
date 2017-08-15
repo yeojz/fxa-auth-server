@@ -34,24 +34,24 @@ describe('remote concurrect', function() {
       return P.all(
         [r1, r2]
       )
-      .then(
-        () => assert(false, 'created both accounts'),
-        function (err) {
-          assert.equal(err.errno, 101, 'account exists')
-          // Note that P.all fails fast when one of the requests fails,
-          // but we have to wait for *both* to complete before tearing
-          // down the test infrastructure.  Bleh.
-          if (! r1.isRejected()) {
-            return r1
-          } else {
-            return r2
+        .then(
+          () => assert(false, 'created both accounts'),
+          function (err) {
+            assert.equal(err.errno, 101, 'account exists')
+            // Note that P.all fails fast when one of the requests fails,
+            // but we have to wait for *both* to complete before tearing
+            // down the test infrastructure.  Bleh.
+            if (! r1.isRejected()) {
+              return r1
+            } else {
+              return r2
+            }
           }
-        }
-      ).then(
-        function () {
-          return server.mailbox.waitForEmail(email)
-        }
-      )
+        ).then(
+          function () {
+            return server.mailbox.waitForEmail(email)
+          }
+        )
     }
   )
 

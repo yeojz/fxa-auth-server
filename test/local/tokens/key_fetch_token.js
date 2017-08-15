@@ -162,7 +162,7 @@ describe('KeyFetchToken', () => {
         .then(
           function (bundle) {
             assert.equal(bundle,
-                    'ee5c58845c7c9412b11bbd20920c2fddd83c33c9cd2c2de2' +
+              'ee5c58845c7c9412b11bbd20920c2fddd83c33c9cd2c2de2' +
                     'd66b222613364636c2c0f8cfbb7c630472c0bd88451342c6' +
                     'c05b14ce342c5ad46ad89e84464c993c3927d30230157d08' +
                     '17a077eef4b20d976f7a97363faf3f064c003ada7d01aa70')

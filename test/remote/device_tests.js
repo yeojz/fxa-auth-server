@@ -481,39 +481,39 @@ describe('remote device', function() {
         pushAuthKey: base64url(crypto.randomBytes(16))
       }
       return Client.create(config.publicUrl, email, password)
-      .then(
-        function (client) {
-          return client.updateDevice(deviceInfo)
-            .then(
-              function () {
-                return client.devices()
-              }
-            )
-            .then(
-              function (devices) {
-                assert.equal(devices[0].pushCallback, deviceInfo.pushCallback, 'devices returned correct pushCallback')
-                assert.equal(devices[0].pushPublicKey, deviceInfo.pushPublicKey, 'devices returned correct pushPublicKey')
-                assert.equal(devices[0].pushAuthKey, deviceInfo.pushAuthKey, 'devices returned correct pushAuthKey')
-                return client.updateDevice({
-                  id: client.device.id,
-                  pushCallback: 'https://updates.push.services.mozilla.com/foo'
-                })
-              }
-            )
-            .then(
-              function () {
-                return client.devices()
-              }
-            )
-            .then(
-              function (devices) {
-                assert.equal(devices[0].pushCallback, 'https://updates.push.services.mozilla.com/foo', 'devices returned correct pushCallback')
-                assert.equal(devices[0].pushPublicKey, '', 'devices returned newly empty pushPublicKey')
-                assert.equal(devices[0].pushAuthKey, '', 'devices returned newly empty pushAuthKey')
-              }
-            )
-        }
-      )
+        .then(
+          function (client) {
+            return client.updateDevice(deviceInfo)
+              .then(
+                function () {
+                  return client.devices()
+                }
+              )
+              .then(
+                function (devices) {
+                  assert.equal(devices[0].pushCallback, deviceInfo.pushCallback, 'devices returned correct pushCallback')
+                  assert.equal(devices[0].pushPublicKey, deviceInfo.pushPublicKey, 'devices returned correct pushPublicKey')
+                  assert.equal(devices[0].pushAuthKey, deviceInfo.pushAuthKey, 'devices returned correct pushAuthKey')
+                  return client.updateDevice({
+                    id: client.device.id,
+                    pushCallback: 'https://updates.push.services.mozilla.com/foo'
+                  })
+                }
+              )
+              .then(
+                function () {
+                  return client.devices()
+                }
+              )
+              .then(
+                function (devices) {
+                  assert.equal(devices[0].pushCallback, 'https://updates.push.services.mozilla.com/foo', 'devices returned correct pushCallback')
+                  assert.equal(devices[0].pushPublicKey, '', 'devices returned newly empty pushPublicKey')
+                  assert.equal(devices[0].pushAuthKey, '', 'devices returned newly empty pushAuthKey')
+                }
+              )
+          }
+        )
     }
   )
 
@@ -532,40 +532,40 @@ describe('remote device', function() {
         pushAuthKey: base64url(crypto.randomBytes(16))
       }
       return Client.createAndVerify(config.publicUrl, email, password, server.mailbox)
-      .then(
-        function (client) {
-          return client.updateDevice(deviceInfo)
-            .then(
-              function () {
-                assert(false, 'request should have failed')
-              },
-              function (err) {
-                assert.equal(err.code, 400, 'err.code was 400')
-                assert.equal(err.errno, 107, 'err.errno was 107')
-              }
-            )
+        .then(
+          function (client) {
+            return client.updateDevice(deviceInfo)
+              .then(
+                function () {
+                  assert(false, 'request should have failed')
+                },
+                function (err) {
+                  assert.equal(err.code, 400, 'err.code was 400')
+                  assert.equal(err.errno, 107, 'err.errno was 107')
+                }
+              )
             // A rather strange nodejs bug means that invalid push keys
             // can cause a subsequent /certificate/sign to fail.
             // Test that we've successfully mitigated that bug.
-            .then(
-              function () {
-                var publicKey = {
-                  'algorithm': 'RS',
-                  'n': '4759385967235610503571494339196749614544606692567785' +
+              .then(
+                function () {
+                  var publicKey = {
+                    'algorithm': 'RS',
+                    'n': '4759385967235610503571494339196749614544606692567785' +
                        '7909539347682027142806529730913413168629935827890798' +
                        '72007974809511698859885077002492642203267408776123',
-                  'e': '65537'
+                    'e': '65537'
+                  }
+                  return client.sign(publicKey, 1000 * 60 * 5)
                 }
-                return client.sign(publicKey, 1000 * 60 * 5)
-              }
-            )
-            .then(
-              function (cert) {
-                assert.equal(typeof(cert), 'string', 'cert was successfully signed')
-              }
-            )
-        }
-      )
+              )
+              .then(
+                function (cert) {
+                  assert.equal(typeof(cert), 'string', 'cert was successfully signed')
+                }
+              )
+          }
+        )
     }
   )
 

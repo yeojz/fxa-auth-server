@@ -44,90 +44,90 @@ describe('remote verifier upgrade', function() {
         var uid = null
 
         return TestServer.start(config)
-        .then(
-          function main(server) {
-            return Client.create(config.publicUrl, email, password, { preVerified: true, keys: true })
-              .then(
-                function (c) {
-                  uid = c.uid
-                  return server.stop()
-                }
-              )
-          }
-        )
-        .then(
-          function () {
-            return DB.connect(config[config.db.backend])
-              .then(
-                function (db) {
-                  return db.account(uid)
-                    .then(
-                      function (account) {
-                        assert.equal(account.verifierVersion, 0, 'wrong version')
-                      }
-                    )
-                    .then(
-                      function () {
-                        return db.close()
-                      }
-                    )
-                }
-              )
-          }
-        )
-        .then(
-          function () {
-            config.verifierVersion = 1
-            return TestServer.start(config)
-          }
-        )
-        .then(
-          function (server) {
-            var client
-            return Client.login(config.publicUrl, email, password, server.mailbox)
-              .then(
-                function (x) {
-                  client = x
-                  return client.changePassword(password)
-                }
-              )
-              .then(
-                function () {
-                  return server.stop()
-                }
-              )
-          }
-        )
-        .then(
-          function () {
-            return DB.connect(config[config.db.backend])
-              .then(
-                function (db) {
-                  return db.account(uid)
-                    .then(
-                      function (account) {
-                        assert.equal(account.verifierVersion, 1, 'wrong upgrade version')
-                      }
-                    )
-                    .then(
-                      function () {
-                        return db.close()
-                      }
-                    )
-                }
-              )
-          }
-        )
-        .then(
-          function () {
-            try {
-              db_server.close()
-            } catch (e) {
+          .then(
+            function main(server) {
+              return Client.create(config.publicUrl, email, password, { preVerified: true, keys: true })
+                .then(
+                  function (c) {
+                    uid = c.uid
+                    return server.stop()
+                  }
+                )
+            }
+          )
+          .then(
+            function () {
+              return DB.connect(config[config.db.backend])
+                .then(
+                  function (db) {
+                    return db.account(uid)
+                      .then(
+                        function (account) {
+                          assert.equal(account.verifierVersion, 0, 'wrong version')
+                        }
+                      )
+                      .then(
+                        function () {
+                          return db.close()
+                        }
+                      )
+                  }
+                )
+            }
+          )
+          .then(
+            function () {
+              config.verifierVersion = 1
+              return TestServer.start(config)
+            }
+          )
+          .then(
+            function (server) {
+              var client
+              return Client.login(config.publicUrl, email, password, server.mailbox)
+                .then(
+                  function (x) {
+                    client = x
+                    return client.changePassword(password)
+                  }
+                )
+                .then(
+                  function () {
+                    return server.stop()
+                  }
+                )
+            }
+          )
+          .then(
+            function () {
+              return DB.connect(config[config.db.backend])
+                .then(
+                  function (db) {
+                    return db.account(uid)
+                      .then(
+                        function (account) {
+                          assert.equal(account.verifierVersion, 1, 'wrong upgrade version')
+                        }
+                      )
+                      .then(
+                        function () {
+                          return db.close()
+                        }
+                      )
+                  }
+                )
+            }
+          )
+          .then(
+            function () {
+              try {
+                db_server.close()
+              } catch (e) {
               // This connection may already be dead if a real mysql server is
               // already bound to :8000.
+              }
             }
-          }
-        )
+          )
       })
     }
   )
