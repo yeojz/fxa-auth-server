@@ -8,12 +8,13 @@ WORKDIR /app
 
 USER app
 
-COPY npm-shrinkwrap.json npm-shrinkwrap.json
+COPY package-lock.json package-lock.json
 COPY package.json package.json
 COPY scripts/download_l10n.sh scripts/download_l10n.sh
 COPY scripts/gen_keys.js scripts/gen_keys.js
 COPY scripts/gen_vapid_keys.js scripts/gen_vapid_keys.js
 
+RUN npm config set engine-strict true
 RUN npm install --production && rm -rf ~app/.npm /tmp/*
 
 COPY . /app

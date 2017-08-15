@@ -12,7 +12,6 @@
     "precommit": "node scripts/write-api-docs && git add docs/api.md",
     "prepush": "grunt quicklint && grunt templates && git status -s | (! grep 'M lib/senders/templates/')",
     "postinstall": "scripts/download_l10n.sh",
-    "shrinkwrap": "npmshrink && npm run postinstall",
     "start": "NODE_ENV=dev scripts/start-local.sh 2>&1",
     "start-mysql": "NODE_ENV=dev scripts/start-local-mysql.sh 2>&1",
     "test": "NODE_ENV=dev CORS_ORIGIN=http://foo,http://bar VERIFIER_VERSION=0 MEMCACHE_METRICS_CONTEXT_ADDRESS=none NO_COVERAGE=1 scripts/test-local.sh",
@@ -25,7 +24,8 @@
     "url": "git://github.com/mozilla/fxa-auth-server.git"
   },
   "engines": {
-    "node": ">=4.5.0"
+    "node": ">=4.5.0",
+    "npm": ">=5"
   },
   "bugs": "https://github.com/mozilla/fxa-auth-server/issues/",
   "homepage": "https://github.com/mozilla/fxa-auth-server/",
@@ -41,6 +41,7 @@
     "buffer-equal-constant-time": "1.0.1",
     "convict": "2.0.0",
     "email-addresses": "2.0.2",
+    "fxa-content-server-l10n": "git://github.com/mozilla/fxa-content-server-l10n.git#master",
     "fxa-geodb": "0.0.8",
     "fxa-jwtool": "0.7.1",
     "fxa-shared": "1.0.4",
@@ -100,7 +101,6 @@
     "mkdirp": "0.5.1",
     "mocha": "3.1.2",
     "nock": "8.0.0",
-    "npmshrink": "1.0.1",
     "nyc": "8.4.0",
     "proxyquire": "1.7.10",
     "simplesmtp": "0.3.35",
