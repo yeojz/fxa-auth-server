@@ -35,6 +35,7 @@ var makeRoutes = function (options, requireMocks) {
     lifetime: 30
   }
   config.lastAccessTimeUpdates = {}
+  config.pushNotificationForSignIn = config.pushNotificationForSignIn || {}
   config.signinConfirmation = config.signinConfirmation || {}
   config.signinUnblock = config.signinUnblock || {}
   config.secondaryEmail = config.secondaryEmail || {}
@@ -404,6 +405,7 @@ describe('/account/create', () => {
 describe('/account/login', function () {
   var config = {
     newLoginNotificationEnabled: true,
+    pushNotificationForSignIn: {},
     securityHistory: {
       ipProfiling: {}
     },
@@ -478,7 +480,7 @@ describe('/account/login', function () {
   })
   var keyFetchTokenId = hexString(16)
   var sessionTokenId = hexString(16)
-  var uid = uuid.v4('binary')
+  var uid = uuid.v4('binary').toString('hex')
   var mockDB = mocks.mockDB({
     email: TEST_EMAIL,
     emailVerified: true,
@@ -895,6 +897,41 @@ describe('/account/login', function () {
           assert.ok(! response.verified, 'response indicates account is unverified')
         })
       })
+    })
+
+    describe.only('via push', () => {
+      beforeEach(() => {
+        config.pushNotificationForSignIn.enabled = true
+        config.pushNotificationForSignIn.enabledEmailAddresses = new RegExp(TEST_EMAIL)
+        mockPush.notifyVerifyLogin.reset()
+      })
+
+      afterEach(() => {
+        mockDB.devices = sinon.spy(() => P.resolve([]))
+        config.pushNotificationForSignIn.enabled = false
+      })
+
+      it('should send a push', () => {
+        mockDB.devices = sinon.spy(() => P.resolve([
+          {
+            type: 'desktop',
+            uaBrowserVersion: '56'
+          }
+        ]))
+        return runTest(route, mockRequest, response => {
+          assert.ok(! response.verified, 'response indicates account is not verified')
+          assert.equal(response.verificationMethod, 'push', 'verificationMethod is push')
+          assert.equal(response.verificationReason, 'login', 'verificationReason is login')
+
+          assert.equal(mockMailer.sendVerifyLoginEmail.callCount, 0, 'mailer.sendVerifyLoginEmail was not called')
+
+          assert.equal(mockPush.notifyVerifyLogin.callCount, 1)
+          const args = mockPush.notifyVerifyLogin.args[0]
+          assert.equal(args[0], uid)
+        })
+      })
+      it('should send an email if no devices to use')
+      it('should send an email if push fails')
     })
   })
 

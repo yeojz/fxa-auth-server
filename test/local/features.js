@@ -8,7 +8,7 @@ const assert = require('insist')
 const sinon = require('sinon')
 const proxyquire = require('proxyquire')
 
-let hashResult = Array(40).fill('0')
+let hashResult = Array(40).fill('0').join('')
 const hash = {
   update: sinon.spy(),
   digest: sinon.spy(() => hashResult)

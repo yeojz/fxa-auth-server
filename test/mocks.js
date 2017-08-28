@@ -111,6 +111,7 @@ const PUSH_METHOD_NAMES = [
   'notifyAccountDestroyed',
   'notifyProfileUpdated',
   'notifyUpdate',
+  'notifyVerifyLogin',
   'pushToAllDevices',
   'pushToDevices'
 ]
