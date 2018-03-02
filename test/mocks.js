@@ -50,6 +50,7 @@ const DB_METHOD_NAMES = [
   'deviceFromTokenVerificationId',
   'deleteTotpToken',
   'devices',
+  'device',
   'emailBounces',
   'emailRecord',
   'forgotPasswordVerified',
@@ -124,8 +125,14 @@ const PUSH_METHOD_NAMES = [
   'notifyPasswordReset',
   'notifyAccountUpdated',
   'notifyAccountDestroyed',
+  'notifyCommandReceived',
   'notifyProfileUpdated',
   'sendPush'
+]
+
+const PUSHBOX_METHOD_NAMES = [
+  'retrieve',
+  'store'
 ]
 
 module.exports = {
@@ -139,6 +146,7 @@ module.exports = {
   mockMailer: mockObject(MAILER_METHOD_NAMES),
   mockMetricsContext,
   mockPush,
+  mockPushbox,
   mockRequest
 }
 
@@ -295,6 +303,13 @@ function mockDB (data, errors) {
       assert.ok(typeof uid === 'string')
       return P.resolve(data.devices || [])
     }),
+    device: sinon.spy((uid, deviceId) => {
+      assert.ok(typeof uid === 'string')
+      assert.ok(typeof deviceId === 'string')
+      const device = data.devices.find(d => d.id === deviceId)
+      assert.ok(device)
+      return P.resolve(device)
+    }),
     deleteSessionToken: sinon.spy(() => {
       return P.resolve()
     }),
@@ -377,13 +392,22 @@ function mockObject (methodNames) {
 
 function mockPush (methods) {
   const push = Object.assign({}, methods)
-  // So far every push method has a uid for first argument, let's keep it simple.
   PUSH_METHOD_NAMES.forEach((name) => {
     if (! push[name]) {
       push[name] = sinon.spy(() => P.resolve())
     }
   })
   return push
+}
+
+function mockPushbox (methods) {
+  const pushbox = Object.assign({}, methods)
+  PUSHBOX_METHOD_NAMES.forEach((name) => {
+    if (! pushbox[name]) {
+      pushbox[name] = sinon.spy(() => P.resolve())
+    }
+  })
+  return pushbox
 }
 
 function mockDevices (data) {
