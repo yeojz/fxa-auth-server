@@ -150,9 +150,9 @@ describe('remote push db', function() {
   )
 
   after(() => {
-    return P.all([
-      TestServer.stop(dbServer),
-      db.close()
-    ])
+      TestServer.stop(dbServer)
+      .then(() => {
+        db.close()
+      })
   })
 })

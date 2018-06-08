@@ -803,6 +803,6 @@ describe('remote account signin verification', function() {
   )
 
   after(() => {
-    return TestServer.stop(server)
+   TestServer.stop(server)
   })
 })
